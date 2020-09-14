@@ -132,3 +132,23 @@ REST_FRAMEWORK = {
 
 # TODO: Get from dotenv or environmental variable
 OPERNWEATHERMAP_KEY = '8f350162e1f0249493b21761e2507d63'
+OPENWEATHER_API_URL = 'http://api.openweathermap.org/data/2.5/'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR.joinpath('logs/debug.log'),
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}

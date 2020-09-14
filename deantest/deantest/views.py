@@ -1,27 +1,15 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from deantest.settings import OPERNWEATHERMAP_KEY
+from deantest.settings import OPERNWEATHERMAP_KEY, OPENWEATHER_API_URL
 import requests
 import statistics
 
+# import the logging library
+import logging
 
-class _logger:
-
-    def __init__(self):
-        pass
-
-    def debug(self, what):
-        print("\nDEBUG: %s" % what)
-
-    def error(self, what):
-        print("\nERROR: %s" % what)
-
-    def info(self, what):
-        print("\nERROR: %s" % what)
-
-
-logger = _logger()
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
 
 
 def aggrigateStats(records):
@@ -71,8 +59,9 @@ def forecast(APIView, city):
     # Query rest service
     url = None
     if 'period' not in APIView.query_params:
-        url = 'http://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&units=metric' % (
-            city, OPERNWEATHERMAP_KEY)
+
+        url = '%sweather?q=%s&appid=%s&units=metric' % (
+            OPENWEATHER_API_URL, city, OPERNWEATHERMAP_KEY)
 
     elif APIView.query_params['period'].isnumeric():
 
@@ -80,9 +69,11 @@ def forecast(APIView, city):
         cnt = APIView.query_params['period']  # TODO: Check if this is clean
 
         # Set cnt parameter to control number of rows returned
-        url = 'http://api.openweathermap.org/data/2.5/forecast?q=%s&appid=%s&units=metric&cnt=%s' % (
-            city, OPERNWEATHERMAP_KEY, cnt)
+        url = '%sforecast?q=%s&appid=%s&units=metric&cnt=%s' % (
+            OPENWEATHER_API_URL, city, OPERNWEATHERMAP_KEY, cnt)
+
     else:
+
         # Error http 400 bad request error
         return Response({'message': 'invalid period'}, status=status.HTTP_400_BAD_REQUEST)
 
