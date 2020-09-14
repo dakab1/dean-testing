@@ -1,3 +1,4 @@
+  
 # This file specifies files that are *not* uploaded to Google Cloud Platform
 # using gcloud. It follows the same syntax as .gitignore, with the addition of
 # "#!include" directives (which insert the entries of the given .gitignore-style
@@ -12,7 +13,8 @@
 # below:
 .git
 .gitignore
-
+venv
+tests
 # Python pycache:
 __pycache__/
 # Ignored by the build system
