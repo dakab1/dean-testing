@@ -129,3 +129,6 @@ REST_FRAMEWORK = {
         # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+# TODO: Get from dotenv or environmental variable
+OPERNWEATHERMAP_KEY = '8f350162e1f0249493b21761e2507d63'
