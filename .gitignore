@@ -1,4 +1,5 @@
 venv
 .vscode
-deantest/__pycache__/*
+deantest/__pycache__/*.*
 test/deantest/logs/debug.log
+deantest/deantest/__pycache__/*.*

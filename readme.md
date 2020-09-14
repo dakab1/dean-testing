@@ -22,11 +22,12 @@
 * Used django-test-framework
 
 ### Installation
+I suggest you do the below in virtualenv
 
-pip install -r requirements.txt
+```pip install -r requirements.txt```
 
 ### Start dev server
-./manage.py runserver 0.0.0.0:8000
+```./manage.py runserver 0.0.0.0:8000```
 
 #### Example Call
 Here is an example call if you are running on localhost in debug: 
