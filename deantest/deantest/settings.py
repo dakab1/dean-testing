@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 
+import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,9 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'x+!zfrbg8h9yxlr&23ld2n^1wh^3z3=cegj-pbp@l-l!2v5a)7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['deantest1.ew.r.appspot.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['deantest1.ew.r.appspot.com', '127.0.0.1',
+                 'localhost', 'dean-weather-test.ew.r.appspot.com']
 
 
 # Application definition
@@ -119,7 +122,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/3.0/howto/static-files/
+
 STATIC_URL = '/static/'
+
+# STATIC_ROOT = ''
+# STATICFILES_DIRS = []
+
+if not DEBUG:
+    STATIC_ROOT = BASE_DIR / 'static'
+else:
+    STATICFILES_DIRS = [
+        BASE_DIR / 'static',
+    ]
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
@@ -133,22 +149,3 @@ REST_FRAMEWORK = {
 # TODO: Get from dotenv or environmental variable
 OPERNWEATHERMAP_KEY = '8f350162e1f0249493b21761e2507d63'
 OPENWEATHER_API_URL = 'http://api.openweathermap.org/data/2.5/'
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': BASE_DIR.joinpath('logs/debug.log'),
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-    },
-}

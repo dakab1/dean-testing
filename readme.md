@@ -14,8 +14,8 @@
 *Should be done in one day
 
 #### Extra goals:
-* Provide a view which renders a bar chart for the requested data 
-* Deploy it somewhere
+* Provide a view which renders a bar chart for the requested data https://dean-weather-test.ew.r.appspot.com/chart/
+* Deploy it somewhere - https://dean-weather-test.ew.r.appspot.com/v1/forecast/centurion/
 
 ### Solution
 * Used free options available on openweathermap.org

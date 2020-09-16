@@ -19,12 +19,6 @@ from deantest import views
 from rest_framework import routers, serializers, viewsets
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    # path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
-    path(
-        # r'(?P<version>(v1|v2))/hello/',
-        r'v1/forecast/<str:city>/',
-        views.forecast,
-        name='forecast'
-    ),
+    path(r'v1/forecast/<str:city>/', views.forecast, name='forecast'),
+    path(r'chart/', views.chart.as_view(), name='chart')
 ]
