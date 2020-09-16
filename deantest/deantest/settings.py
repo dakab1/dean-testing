@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'x+!zfrbg8h9yxlr&23ld2n^1wh^3z3=cegj-pbp@l-l!2v5a)7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['deantest1.ew.r.appspot.com', '127.0.0.1', 'localhost']
 
