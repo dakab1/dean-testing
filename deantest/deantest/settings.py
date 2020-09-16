@@ -27,7 +27,8 @@ SECRET_KEY = 'x+!zfrbg8h9yxlr&23ld2n^1wh^3z3=cegj-pbp@l-l!2v5a)7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['deantest1.ew.r.appspot.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['deantest1.ew.r.appspot.com', '127.0.0.1',
+                 'localhost', 'dean-weather-test.ew.r.appspot.com']
 
 
 # Application definition
@@ -126,14 +127,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = ''
-STATICFILES_DIRS = []
+# STATIC_ROOT = ''
+# STATICFILES_DIRS = []
 
 if not DEBUG:
-    STATIC_ROOT = os.path.join(BASE_DIR, "static")
+    STATIC_ROOT = BASE_DIR / 'static'
 else:
     STATICFILES_DIRS = [
-        os.path.join(BASE_DIR, "static"),
+        BASE_DIR / 'static',
     ]
 
 REST_FRAMEWORK = {
@@ -148,22 +149,3 @@ REST_FRAMEWORK = {
 # TODO: Get from dotenv or environmental variable
 OPERNWEATHERMAP_KEY = '8f350162e1f0249493b21761e2507d63'
 OPENWEATHER_API_URL = 'http://api.openweathermap.org/data/2.5/'
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': BASE_DIR.joinpath('logs/debug.log'),
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-    },
-}
