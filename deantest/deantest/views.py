@@ -2,6 +2,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from deantest.settings import OPERNWEATHERMAP_KEY, OPENWEATHER_API_URL
+from django.views.generic import TemplateView
+from django.http import HttpResponse
+
 import requests
 import statistics
 
@@ -53,8 +56,6 @@ def aggrigateStats(records):
 
 @api_view(('GET',))
 def forecast(APIView, city):
-
-    # TODO: Validate input
 
     # Query rest service
     url = None
@@ -108,3 +109,46 @@ def forecast(APIView, city):
 
         # Perhaps bad request data
         return Response(data={'message': 'Error'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class chart (TemplateView):
+    template_name = 'chart.html'
+
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        city = self.request.GET.get('city')
+
+        # Get weather data
+        protocol = 'https://' if self.request.is_secure() else 'http://'
+        baseUrl = protocol + self.request.get_host()
+
+        period = 7
+        if 'period' in self.request.GET:
+            if self.request.GET.get('period').isnumeric():
+                period = self.request.GET.get("period")
+        context['period'] = period
+
+        if city:
+
+            context['city'] = city
+
+            # Set cnt parameter to control number of rows returned
+            url = '%s/v1/forecast/%s/?period=%s' % (baseUrl, city, period)
+
+            logger.info('Sending request to %s' % url)
+            r = requests.get(url)
+
+            logger.debug('response code is %s' % r.status_code)
+
+            context['data'] = {}
+            if r.status_code == 200:
+                jsonData = r.json()
+                for periodData in jsonData['data']:
+                    context['data'][periodData['dt_txt']
+                                    ] = periodData['main']['temp']
+
+        return context

@@ -1,0 +1,73 @@
+{% load static %}
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Weather Chart</title>
+    <meta name="description" content="The HTML5 Herald">
+    <meta name="author" content="SitePoint">
+
+    <script src="{% static '/chart.js/dist/Chart.min.js' %}"></script>
+
+</head>
+
+<body>
+    <h1>Weather Chart</h1>
+    <p>Here is the char of the weather in {{city}} in degree celsius.</p>
+
+    <form method="GET">
+        <table border="0px">
+            <tr>
+                <td>Enter a city name:</td>
+                <td><input type="text" name="city" value="{{city}}" /></td>
+            </tr>
+            <tr>
+                <td>Period (number of 3 hour periods to forecast from now)</td>
+                <td><input type="number" name="period" value="{{period}}" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="submit">Fetch weather chart</button></td>
+            </tr>
+        </table>
+    </form>
+
+    {% if data %}
+    <canvas id="myChart" width="400" height="400"></canvas>
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [
+                    {% for date, temp in data.items %}
+                        '{{ date }}',
+        {% endfor %}                    
+                ],
+        datasets: [{
+            label: 'Temperatures in period',
+            data: [
+                {% for date, temp in data.items %}
+                            {{ temp }},
+        {% endfor %}
+        ],
+            borderWidth: 1
+                }]
+            },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+        });
+    </script>
+    {% endif %}
+</body>
+
+</html>
